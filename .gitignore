@@ -13,6 +13,9 @@ wheels/
 .env
 
 CLAUDE.md
+.vscode
+.ruff_cache
+.pytest_cache
 
 # macOS
 .DS_Store

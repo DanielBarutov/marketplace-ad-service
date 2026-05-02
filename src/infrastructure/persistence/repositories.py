@@ -40,7 +40,9 @@ class SQLAlchemyAdRepository(AdRepository):
         self,
         ad_id: int,
     ) -> Ad | None:
-        raise NotImplementedError
+        result = await self._session.execute(select(AdModel).where(AdModel.id == ad_id))
+        model = result.scalar_one_or_none()
+        return _to_entity(model) if model else None
 
     async def list(
         self,
@@ -71,7 +73,11 @@ class SQLAlchemyAdRepository(AdRepository):
         self,
         ad: Ad,
     ) -> None:
-        raise NotImplementedError
+        model = AdModel.from_entity(ad)
+        self._session.add(model)
+        await self._session.flush()
+        await self._session.refresh(model)
+        return _to_entity(model)
 
 
 def _to_entity(model: AdModel) -> Ad:

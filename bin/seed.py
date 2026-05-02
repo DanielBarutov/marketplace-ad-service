@@ -129,7 +129,8 @@ def _build_ad(item: dict, cities: list[str]) -> dict:
     jitter = int(base_price * 0.05)
     return {
         "title": title,
-        "description": f"{title}. В отличном состоянии, есть все документы, возможен торг.",
+        "description": f"""{title}. В отличном состоянии, есть все документы, 
+        возможен торг.""",
         "price": max(0, base_price + random.randint(-jitter, jitter)),
         "category": category,
         "city": random.choice(cities),
@@ -169,7 +170,8 @@ async def main() -> None:
         total_needed = len(users) * ADS_PER_USER
         if total_needed > len(items):
             raise RuntimeError(
-                f"need {total_needed} unique items but only {len(items)} are defined in {SEED_FILE}; "
+                f"need {total_needed} unique items but only {len(items)} are "
+                f"defined in {SEED_FILE}; "
                 f"reduce SEED_ADS_PER_USER or add more items"
             )
         shuffled = items.copy()

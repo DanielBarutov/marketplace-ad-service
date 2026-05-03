@@ -73,11 +73,20 @@ class SQLAlchemyAdRepository(AdRepository):
         self,
         ad: Ad,
     ) -> None:
-        model = AdModel.from_entity(ad)
-        self._session.add(model)
-        await self._session.flush()
-        await self._session.refresh(model)
-        return _to_entity(model)
+        model = AdModel(
+            id=ad.id,
+            user_id=ad.user_id,
+            title=ad.title,
+            description=ad.description,
+            price=ad.price,
+            category=ad.category,
+            city=ad.city,
+            status=ad.status.value,
+            views=ad.views,
+            created_at=ad.created_at,
+            updated_at=ad.updated_at,
+        )
+        await self._session.merge(model)
 
 
 def _to_entity(model: AdModel) -> Ad:

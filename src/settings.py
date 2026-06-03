@@ -22,4 +22,8 @@ class Settings(BaseSettings):
         if os.getenv("KAFKA_TOPIC_MARKETPLACE_ADS")
         else "ads"
     )
-    auth_service_url: str = "http://localhost:8000"
+    auth_service_url: str = (
+        os.getenv("AUTH_SERVICE_URL")
+        if os.getenv("AUTH_SERVICE_URL")
+        else "http://localhost:8000"
+    )

@@ -14,6 +14,12 @@ class Settings(BaseSettings):
         )
     jwt_secret: str = "change-me"
     jwt_algorithm: str = "HS256"
-    kafka_bootstrap_servers: str = "localhost:9092"
-    kafka_topic_ads: str = "ads"
+    kafka_bootstrap_servers: str = (
+        os.getenv("KAFKA_BROKERS") if os.getenv("KAFKA_BROKERS") else "localhost:9092"
+    )
+    kafka_topic_ads: str = (
+        os.getenv("KAFKA_TOPIC_MARKETPLACE_ADS")
+        if os.getenv("KAFKA_TOPIC_MARKETPLACE_ADS")
+        else "ads"
+    )
     auth_service_url: str = "http://localhost:8000"
